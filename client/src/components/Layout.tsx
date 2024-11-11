@@ -1,8 +1,11 @@
 import { Outlet } from "react-router-dom";
+import { CourseComponentProps } from "../types/types";
 import Nav from "./nav-component";
-import React from "react";
 
-const Layout = ({ currentUser, setCurrentUser }) => {
+const Layout: React.FC<CourseComponentProps> = ({
+  currentUser,
+  setCurrentUser,
+}) => {
   if (currentUser) {
     console.log("他會執行");
   }

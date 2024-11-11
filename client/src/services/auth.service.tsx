@@ -17,8 +17,10 @@ class AuthService {
       role,
     }); // 回傳一個promise 檔案
   }
+
   getCurrentUser() {
-    return JSON.parse(localStorage.getItem("user"));
+    const user = localStorage.getItem("user");
+    return user ? JSON.parse(user) : null;
   }
 }
 

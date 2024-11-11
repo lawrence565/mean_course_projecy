@@ -1,18 +1,20 @@
-import React, { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { CourseComponentProps } from "../types/types";
+import { AxiosError } from "axios";
 import AuthService from "../services/auth.service";
 
-const LoginComponent = (props) => {
-  let { currentUser, setCurrentUser } = props;
+const LoginComponent = (props: CourseComponentProps) => {
+  let { setCurrentUser } = props;
   let navigate = useNavigate();
-  let [email, setEmail] = useState();
-  let [password, setPassword] = useState();
-  let [message, setMessage] = useState();
+  let [email, setEmail] = useState<string>("");
+  let [password, setPassword] = useState<string>("");
+  let [message, setMessage] = useState<string>("");
 
-  const handleChangeEmail = (e) => {
+  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const handleChangePassword = (e) => {
+  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
   const handleLogin = async () => {
@@ -23,8 +25,14 @@ const LoginComponent = (props) => {
       window.alert("登入成功，即將導向至個人頁面");
       setCurrentUser(AuthService.getCurrentUser());
       navigate("/profile");
-    } catch (e) {
-      setMessage(e.response.data);
+    } catch (e: unknown) {
+      if (e instanceof AxiosError && e.response) {
+        setMessage(e.response.data);
+      } else if (e instanceof Error) {
+        setMessage(e.message);
+      } else {
+        console.error("Unknown error:", e);
+      }
     }
   };
 

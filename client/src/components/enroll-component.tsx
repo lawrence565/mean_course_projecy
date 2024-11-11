@@ -1,24 +1,19 @@
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState, MouseEvent, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import CourseService from "../services/course.service";
-import { current_user } from "../types/types";
-
-interface CourseComponentProps {
-  currentUser: current_user | undefined;
-  setCurrentUser: Dispatch<SetStateAction<current_user | undefined>>;
-}
+import { course_data, CourseComponentProps } from "../types/types";
 
 const EnrollComponent = (props: CourseComponentProps) => {
   let { currentUser } = props;
   const navigate = useNavigate();
   let [searchInput, setSearchInput] = useState("");
-  let [searchResult, setSearchResult] = useState(null);
+  let [searchResult, setSearchResult] = useState<course_data[]>([]);
 
   const handleTakeToLogin = () => {
     navigate("/login");
   };
 
-  const handleChangeInput = (e) => {
+  const handleChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchInput(e.target.value);
   };
 
@@ -33,15 +28,20 @@ const EnrollComponent = (props: CourseComponentProps) => {
       });
   };
 
-  const handleEnroll = (e) => {
-    CourseService.enroll(e.target.id)
-      .then(() => {
-        window.alert("課程註冊成功。重新導向到課程頁面。");
-        navigate("/course");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const handleEnroll = (e: MouseEvent<HTMLAnchorElement>) => {
+    const target = e.target as HTMLAnchorElement;
+    if (target) {
+      console.log(target.id);
+
+      CourseService.enroll(target.id)
+        .then(() => {
+          window.alert("課程註冊成功。重新導向到課程頁面。");
+          navigate("/course");
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   return (

@@ -1,9 +1,12 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import AuthService from "../services/auth.service";
+import { CourseComponentProps } from "../types/types";
 
-const NavComponent = ({ currentUser, setCurrentUser }) => {
-  const handleLogout = (e) => {
+const NavComponent: React.FC<CourseComponentProps> = ({
+  currentUser,
+  setCurrentUser,
+}) => {
+  const handleLogout = () => {
     AuthService.logout(); //清空localstorage
     window.alert("登出成功！，即將導向到首頁");
     setCurrentUser(null);

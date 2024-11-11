@@ -66,7 +66,7 @@ const CourseComponent: React.FC<CourseComponentProps> = ({ currentUser }) => {
                     {course.description}
                   </p>
                   <p style={{ margin: "0.5rem 0rem" }}>
-                    學生人數：{course.student.length}
+                    學生人數：{course.students.length}
                   </p>
                   <p style={{ margin: "0.5rem 0rem" }}>
                     課程價格：{course.price}

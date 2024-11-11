@@ -1,9 +1,8 @@
-import { useState, useEffect } from "react";
-import AuthService from "../services/auth.service";
 import React from "react";
+import { CourseComponentProps } from "../types/types";
 
-const ProfileComponent = (props) => {
-  let { currentUser, setCurrentUser } = props;
+const ProfileComponent: React.FC<CourseComponentProps> = (props) => {
+  let { currentUser } = props;
 
   return (
     <div style={{ padding: "3rem" }}>

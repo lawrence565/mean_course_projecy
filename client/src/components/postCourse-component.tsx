@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
+import { CourseComponentProps } from "../types/types";
 import CourseService from "../services/course.service";
 
-const PostCourseComponent = (props) => {
-  let { currentUser, setCurrentUser } = props;
+const PostCourseComponent = (props: CourseComponentProps) => {
+  let { currentUser } = props;
   let [title, setTitle] = useState("");
   let [description, setDescription] = useState("");
   let [price, setPrice] = useState(0);
@@ -12,14 +13,14 @@ const PostCourseComponent = (props) => {
   const handleTakeToLogin = () => {
     navigate("/login");
   };
-  const handleChangeTitle = (e) => {
+  const handleChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
   };
-  const handleChangeDesciption = (e) => {
+  const handleChangeDesciption = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setDescription(e.target.value);
   };
-  const handleChangePrice = (e) => {
-    setPrice(e.target.value);
+  const handleChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
+    setPrice(parseInt(e.target.value));
   };
   const postCourse = () => {
     CourseService.post(title, description, price)
@@ -53,7 +54,7 @@ const PostCourseComponent = (props) => {
       )}
       {currentUser && currentUser.user.role == "instructor" && (
         <div className="form-group">
-          <label for="exampleforTitle">課程標題：</label>
+          <label htmlFor="exampleforTitle">課程標題：</label>
           <input
             name="title"
             type="text"
@@ -62,7 +63,7 @@ const PostCourseComponent = (props) => {
             onChange={handleChangeTitle}
           />
           <br />
-          <label for="exampleforContent">內容：</label>
+          <label htmlFor="exampleforContent">內容：</label>
           <textarea
             className="form-control"
             id="exampleforContent"
@@ -71,7 +72,7 @@ const PostCourseComponent = (props) => {
             onChange={handleChangeDesciption}
           />
           <br />
-          <label for="exampleforPrice">價格：</label>
+          <label htmlFor="exampleforPrice">價格：</label>
           <input
             name="price"
             type="number"

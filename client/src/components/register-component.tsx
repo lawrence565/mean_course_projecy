@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AuthService from "../services/auth.service";
+import { AxiosError } from "axios";
 
 const RegisterComponent = () => {
   const navigate = useNavigate();
@@ -11,27 +12,33 @@ const RegisterComponent = () => {
   let [role, setRole] = useState("");
   let [message, setMessage] = useState("");
 
-  const handleChangeUsername = (e) => {
+  const handleChangeUsername = (e: ChangeEvent<HTMLInputElement>) => {
     setUserName(e.target.value);
   };
-  const handleChangeEmail = (e) => {
+  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
   };
-  const handleChangePassword = (e) => {
+  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const handleChangeRole = (e) => {
+  const handleChangeRole = (e: ChangeEvent<HTMLInputElement>) => {
     setRole(e.target.value);
   };
 
-  const handleRegister = (e) => {
+  const handleRegister = () => {
     AuthService.register(username, email, password, role)
       .then(() => {
         window.alert("註冊成功，您即將被導向登入頁面");
         navigate("/login");
       })
-      .catch((e) => {
-        setMessage(e.response.data);
+      .catch((e: unknown) => {
+        if (e instanceof AxiosError && e.response) {
+          setMessage(e.response.data);
+        } else if (e instanceof Error) {
+          setMessage(e.message);
+        } else {
+          console.error("Unknown error:", e);
+        }
       });
   };
 

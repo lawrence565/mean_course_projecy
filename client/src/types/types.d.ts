@@ -9,9 +9,15 @@ export type current_user = {
 };
 
 export type course_data = {
+  _id: string;
   title: string;
   description: string;
   price: number;
-  student: string[];
   instructor: string;
+  students: string[];
 };
+
+export interface CourseComponentProps {
+  currentUser: current_user | undefined;
+  setCurrentUser: Dispatch<SetStateAction<current_user | undefined>>;
+}

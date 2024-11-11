@@ -2,10 +2,12 @@ import axios from "axios";
 const API_USE = "http://localhost:8080/api/course";
 
 class CourseService {
-  post(title, description, price) {
+  post(title: string, description: string, price: number) {
     let token;
-    if (localStorage.getItem("user")) {
-      token = JSON.parse(localStorage.getItem("user")).token;
+    const user = localStorage.getItem("user");
+
+    if (user) {
+      token = JSON.parse(user).token;
     } else {
       token = "";
     }
@@ -17,10 +19,12 @@ class CourseService {
   }
 
   // 使用學生id 尋找學生修習的課程
-  getEnrolledCourses(_id) {
+  getEnrolledCourses(_id: string) {
     let token;
-    if (localStorage.getItem("user")) {
-      token = JSON.parse(localStorage.getItem("user")).token;
+    const user = localStorage.getItem("user");
+
+    if (user) {
+      token = JSON.parse(user).token;
     } else {
       token = "";
     }
@@ -31,10 +35,12 @@ class CourseService {
   }
 
   // 使用學生id 尋找學生修習的課程
-  getCoursesByName(name) {
+  getCoursesByName(name: string) {
     let token;
-    if (localStorage.getItem("user")) {
-      token = JSON.parse(localStorage.getItem("user")).token;
+    const user = localStorage.getItem("user");
+
+    if (user) {
+      token = JSON.parse(user).token;
     } else {
       token = "";
     }
@@ -44,10 +50,12 @@ class CourseService {
     });
   }
 
-  enroll(_id) {
+  enroll(_id: string) {
     let token;
-    if (localStorage.getItem("user")) {
-      token = JSON.parse(localStorage.getItem("user")).token;
+    const user = localStorage.getItem("user");
+
+    if (user) {
+      token = JSON.parse(user).token;
     } else {
       token = "";
     }
@@ -61,10 +69,12 @@ class CourseService {
   }
 
   // 使用講師id 尋找講師所開設的課程
-  get(_id) {
+  get(_id: string) {
     let token;
-    if (localStorage.getItem("user")) {
-      token = JSON.parse(localStorage.getItem("user")).token;
+    const user = localStorage.getItem("user");
+
+    if (user) {
+      token = JSON.parse(user).token;
     } else {
       token = "";
     }
