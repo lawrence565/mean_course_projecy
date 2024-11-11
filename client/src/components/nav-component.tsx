@@ -12,10 +12,6 @@ const NavComponent: React.FC<CourseComponentProps> = ({
     setCurrentUser(null);
   };
 
-  if (currentUser) {
-    console.log(currentUser);
-  }
-
   return (
     <div>
       <nav>

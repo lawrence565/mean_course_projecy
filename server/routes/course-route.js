@@ -22,6 +22,16 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/allCourse", async (req, res) => {
+  try {
+    let courseFound = await Course.find({}) // 找到跟instructor 有關的資料, 需使用query 類型的資料
+      .exec();
+    return res.send(courseFound);
+  } catch (e) {
+    return res.status(500).send("遇到某些錯誤" + e);
+  }
+});
+
 router.get("/:_id", async (req, res) => {
   let { _id } = req.params;
   try {

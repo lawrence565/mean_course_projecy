@@ -11,8 +11,6 @@ import EnrollComponent from "./components/enroll-component";
 import AuthService from "./services/auth.service";
 
 function App() {
-  console.log("Sucess");
-
   let [currentUser, setCurrentUser] = useState(AuthService.getCurrentUser());
   return (
     <BrowserRouter>

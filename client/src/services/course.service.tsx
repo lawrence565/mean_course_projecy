@@ -18,6 +18,21 @@ class CourseService {
     );
   }
 
+  getAllCourse() {
+    let token;
+    const user = localStorage.getItem("user");
+
+    if (user) {
+      token = JSON.parse(user).token;
+    } else {
+      token = "";
+    }
+
+    return axios.get(API_USE + "/allCourse", {
+      headers: { Authorization: token },
+    });
+  }
+
   // 使用學生id 尋找學生修習的課程
   getEnrolledCourses(_id: string) {
     let token;
