@@ -1,20 +1,22 @@
-const passport = require("passport");
+import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
+import model from "../models/index.js"; // 假設 user 是在 models 中具名導出
+import dotenv from "dotenv";
 
-let JwtStrategy = require("passport-jwt").Strategy;
-let ExtractJwt = require("passport-jwt").ExtractJwt;
-const User = require("../models").user;
+dotenv.config();
+const User = model.User;
 
-module.exports = (passport) => {
-  let opts = {};
-  opts.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme("jwt");
-  opts.secretOrKey = process.env.PASSPORT_SECRET;
+const configurePassport = (passport) => {
+  const opts = {
+    jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme("jwt"),
+    secretOrKey: process.env.PASSPORT_SECRET,
+  };
 
   passport.use(
-    new JwtStrategy(opts, async function (jwt_payload, done) {
+    new JwtStrategy(opts, async (jwt_payload, done) => {
       try {
-        let foundUser = await User.findOne({ _id: jwt_payload._id }).exec();
+        const foundUser = await User.findOne({ _id: jwt_payload._id }).exec();
         if (foundUser) {
-          return done(null, foundUser); //把 req.user = foundUser
+          return done(null, foundUser); // 把 req.user = foundUser
         } else {
           return done(null, false);
         }
@@ -24,3 +26,5 @@ module.exports = (passport) => {
     })
   );
 };
+
+export default configurePassport;

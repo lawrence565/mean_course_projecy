@@ -1,6 +1,9 @@
-const router = require("express").Router();
-const Course = require("../models").course;
-const courseValidation = require("../validation").courseValidator;
+import express from "express";
+import model from "../models/index.js";
+import { courseValidator as courseValidation } from "../validation.js";
+
+const router = express.Router();
+const Course = model.Course;
 
 router.use((req, res, next) => {
   console.log("course route正在接收一個request");
@@ -8,6 +11,7 @@ router.use((req, res, next) => {
 });
 
 router.get("/", async (req, res) => {
+  console.log(req.Course);
   try {
     let courseFound = await Course.find({})
       .populate("instructor", ["username", "email"]) // 找到跟instructor 有關的資料, 需使用query 類型的資料
@@ -52,7 +56,8 @@ router.post("/", async (req, res) => {
 
 //用講師id尋找課程
 router.get("/instructor/:instructor_id", async (req, res) => {
-  let instructor_uid = req.params;
+  let instructor_id = req.params.instructor_id;
+
   try {
     let courseFound = await Course.find({ instructor: instructor_id })
       .populate("instructor", ["name", "email"])
@@ -166,4 +171,4 @@ router.delete("/:_id", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

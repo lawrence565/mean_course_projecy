@@ -78,7 +78,7 @@ class CourseService {
     } else {
       token = "";
     }
-    return axios.get(API_USE + "/instructor" + _id, {
+    return axios.get(API_USE + "/instructor/" + _id, {
       headers: { Authorization: token },
     });
   }

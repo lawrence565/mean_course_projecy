@@ -1,4 +1,6 @@
 export type current_user = {
+  message: string;
+  token: string;
   user: {
     _id: string;
     username: string;

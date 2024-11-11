@@ -1,13 +1,20 @@
-const express = require("express");
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import passport from "passport";
+import cors from "cors";
+import authRoute from "./routes/auth.js";
+import courseRoute from "./routes/course-route.js";
+import passportConfig from "./config/passport.js";
+
+// 初始化 `express`
 const app = express();
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
+
+// 加載環境變量
 dotenv.config();
-const authRoute = require("./routes").auth;
-const courseRoute = require("./routes").course;
-const passport = require("passport");
-require("./config/passport")(passport);
-const cors = require("cors");
+
+// 配置 Passport
+passportConfig(passport);
 
 mongoose
   .connect("mongodb://localhost:27017/merndb")
@@ -26,8 +33,8 @@ app.use(cors());
 app.use("/api/user", authRoute);
 //需保護CourseRoute，只有登入系統&&是Instructor的人才能使用
 app.use(
-  "/api/courses",
-  passport.authenticate("jwt", { session: false }),
+  "/api/course",
+  // passport.authenticate("jwt", { session: false }),
   courseRoute
 );
 

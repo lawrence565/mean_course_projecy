@@ -1,9 +1,13 @@
-const router = require("express").Router();
-const registerValidation = require("../validation").registerValidator;
-const loginValidation = require("../validation").loginValidator;
-const passport = require("passport");
-const User = require("../models/user-model");
-const jwt = require("jsonwebtoken");
+import express from "express";
+import {
+  registerValidator as registerValidation,
+  loginValidator as loginValidation,
+} from "../validation.js";
+import model from "../models/index.js";
+import jwt from "jsonwebtoken";
+
+const router = express.Router();
+const User = model.User;
 
 router.use((req, res, next) => {
   console.log("正在接收一個跟Auth 有關的請求");
@@ -71,4 +75,4 @@ router.post("/login", async (req, res) => {
   });
 });
 
-module.exports = router;
+export default router;

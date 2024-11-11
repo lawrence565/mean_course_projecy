@@ -59,7 +59,11 @@ const CourseComponent: React.FC<CourseComponentProps> = ({ currentUser }) => {
         <div style={{ display: "flex", flexWrap: "wrap" }}>
           {courseData.map((course: course_data) => {
             return (
-              <div className="card" style={{ width: "18rem", margin: "1rem" }}>
+              <div
+                className="card"
+                style={{ width: "18rem", margin: "1rem" }}
+                key={course._id}
+              >
                 <div className="card-body">
                   <h5 className="card-title">課程名稱：{course.title}</h5>
                   <p style={{ margin: "0.5rem 0rem" }} className="card-text">

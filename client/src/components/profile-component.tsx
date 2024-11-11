@@ -3,6 +3,7 @@ import { CourseComponentProps } from "../types/types";
 
 const ProfileComponent: React.FC<CourseComponentProps> = (props) => {
   let { currentUser } = props;
+  console.log(currentUser?.user.username);
 
   return (
     <div style={{ padding: "3rem" }}>
